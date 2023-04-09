@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Encoder 3.0</title>
+	<meta charset="utf-8">
+	<style>
+		h1 {
+			text-align: center;
+		}
+		label {
+			display: block;
+			margin-top: 20px;
+		}
+		input {
+			display: block;
+			margin-top: 5px;
+			width: 100%;
+			padding: 5px;
+		}
+		textarea {
+			display: block;
+			margin-top: 5px;
+			width: 100%;
+			height: 100px;
+			padding: 5px;
+		}
+		button {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+	<h1>Encoder 3.0</h1>
+	<label for="input">Enter a sentence:</label>
+	<input type="text" id="input">
+	<button onclick="reverseShift()">Reverse and Shift</button>
+	<label for="output">Output:</label>
+	<textarea id="output"></textarea>
+	<button onclick="shiftBack()">Decode</button>
+	<label for="output2">Output:</label>
+	<textarea id="output2"></textarea>
+	<script>
+		function reverseShift() {
+			var input = document.getElementById("input").value;
+			var reversed = input.split("").reverse().join("");
+			var shifted = "";
+			var offset = 0;
+			for (var i = 0; i < reversed.length; i++) {
+				var code = reversed.charCodeAt(i);
+				if ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
+					if (code >= 65 && code <= 90) {
+						code = ((code - 65 + offset) % 26) + 65;
+						offset += 3;
+					} else if (code >= 97 && code <= 122) {
+						code = ((code - 97 + offset) % 26) + 97;
+						offset += 6;
+					}
+					shifted += String.fromCharCode(code);
+				} else {
+					shifted += reversed[i];
+				}
+			}
+			document.getElementById("output").value = shifted;
+		}
+
+		function shiftBack() {
+			var input = document.getElementById("output").value;
+			var shifted = "";
+			var offset = 0;
+			for (var i = 0; i < input.length; i++) {
+				var code = input.charCodeAt(i);
+				if ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
+					if (code >= 65 && code <= 90) {
+						code = ((code - 65 - offset) % 26) + 65;
+						if (code < 65) {
+							code += 26;
+						}
+						offset += 3;
+					} else if (code >= 97 && code <= 122) {
+						code = ((code - 97 - offset) % 26) + 97;
+						if (code < 97) {
+							code += 26;
+						}
+						offset += 6;
+				}
+				shifted += String.fromCharCode(code);
+			} else {
+				shifted += input[i];
+			}
+		}
+		var reversed = shifted.split("").reverse().join("");
+		document.getElementById("output2").value = reversed;
+	}
+</script>
+</body>
+</html>
