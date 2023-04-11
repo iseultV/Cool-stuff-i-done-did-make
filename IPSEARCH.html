@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IP Location Estimator</title>
+	<style>
+		body {
+			background-color: black;
+			color: green;
+			font-family: monospace;
+			font-size: 20px;
+			text-align: center;
+			padding-top: 50px;
+		}
+
+		h1 {
+			font-size: 40px;
+			margin-bottom: 50px;
+		}
+
+		form {
+			display: inline-block;
+			margin-bottom: 50px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		input {
+			background-color: green;
+			border: none;
+			color: black;
+			padding: 10px;
+			margin-bottom: 20px;
+		}
+
+		button {
+			background-color: green;
+			border: none;
+			color: black;
+			padding: 10px;
+			cursor: pointer;
+			margin-right: 20px;
+		}
+
+		p {
+			margin-top: 50px;
+		}
+	</style>
+</head>
+<body>
+	<h1>IP Location Estimator</h1>
+	<form>
+		<label for="ip-address">Enter IP Address:</label>
+		<input type="text" id="ip-address" name="ip-address" placeholder="e.g. 192.168.0.1" required>
+		<button type="button" onclick="estimateLocation()">Estimate Location</button>
+		<button type="button" onclick="checkBlacklist()">Check Blacklist Status</button>
+	</form>
+	<p id="location-result"></p>
+	<p id="blacklist-result"></p>
+
+	<script>
+		function estimateLocation() {
+			var ipAddress = document.getElementById('ip-address').value;
+
+			// Send a request to an IP geolocation API to get location information
+			fetch('https://ipapi.co/'+ipAddress+'/json/')
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				// Display the location information in the HTML page
+				document.getElementById('location-result').innerHTML = 
+					"IP Address: " + data.ip + "<br>" +
+					"Country: " + data.country_name + "<br>" +
+					"City/Town: " + data.city + "<br>" +
+					"Estimated Address: " + data.region + " " + data.postal + ", " + data.country_name + "<br>" +
+					"ISP: " + data.org + "<br>" +
+					"Decimal: " + data.ip_decimal + "<br>" +
+					"ASN: " + data.asn + "<br>" +
+					"Assignment: " + data.asn_organization + "<br>" +
+					"Services: " + data.asn_type + "<br>" +
+					"Region: " + data.region;
+			})
+			.catch(function(error) {
+				console.error(error);
+				document.getElementById('location-result').innerHTML = "An error occurred while estimating the location.";
+			});
+		}
+
+		function checkBlacklist() {
+			var ipAddress = document.getElementById('ip-address').value;
+
+			// Send a request to the ipqualityscore API to check the blacklist status
+			fetch('https://ipqualityscore.com/api/json/ip/' + ipAddress + '?strictness=1&allow_public_access_points=true&fast=true&affiliate_id=<YOUR_AFFILIATE_ID>&api_key=<YOUR_API_KEY>')
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(data) {
+				// Display the blacklist status in the HTML page
+				document.getElementById('blacklist-result').innerHTML =
+					"Blacklist Status: " + data.fraud_score_category;
+			})
+			.catch(function(error) {
+				console.error(error);
+				document.getElementById('blacklist-result').innerHTML = "An error occurred while checking the blacklist status.";
+			});
+		}
+	</script>
+</body>
+</html>
