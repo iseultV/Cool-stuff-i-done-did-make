@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Interpreter</title>
+    <style>
+        /* Define styles for the body */
+        body {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Define styles for the input box and console area */
+        #input {
+            width: 100%;
+            height: 50vh;
+            border: none;
+            font-size: 14px;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #000;
+            color: #fff;
+        }
+
+        #console {
+            width: 100%;
+            height: 50vh;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Define styles for the button */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Define styles for the file options panel */
+        #file-options {
+            width: 150px;
+            height: 100%;
+            background-color: #333;
+            padding: 10px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .file-option {
+            cursor: pointer;
+            font-size: 12px;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-option:hover {
+            background-color: #444;
+        }
+
+        .file-option.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .file-option.active:hover {
+            background-color: #45a049;
+        }
+
+        /* Define styles for the editor panel */
+        .editor-panel {
+            width: calc(100% - 150px);
+            height: 100vh;
+            margin-left: 150px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .editor-title {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .editor-body {
+            display: flex;
+            height: calc(100% - 50px);
+        }
+
+        .editor-code {
+            width: calc(100% / 3);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #111;
+        }
+
+        .editor-code-title {
+            background-color: #333;
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .editor-code-body {
+            height: calc(100% - 30px);
+            overflow: scroll;
+            padding: 5px;
+            box
+    }
+
+    .editor-preview {
+        width: calc(100% / 3 * 2);
+        height: 100%;
+        overflow: scroll;
+        background-color: #222;
+        color: #fff;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Define styles for the HTML keywords */
+    .keyword {
+        color: #f92672;
+    }
+
+    /* Define styles for the HTML attributes */
+    .attribute {
+        color: #a6e22e;
+    }
+
+    /* Define styles for the HTML attribute values */
+    .value {
+        color: #e6db74;
+    }
+</style>
+</head>
+<body>
+    <div id="file-options">
+        <div class="file-option" id="new-file">New File</div>
+        <div class="file-option" id="open-file">Open File</div>
+        <div class="file-option" id="save-file">Save File</div>
+    </div>
+    <div class="editor-panel">
+        <div class="editor-title">HTML Interpreter</div>
+        <div class="editor-body">
+            <div class="editor-code">
+                <div class="editor-code-title">HTML</div>
+                <textarea id="html-input" class="editor-code-body"></textarea>
+            </div>
+            <div class="editor-code">
+                <div class="editor-code-title">CSS</div>
+                <textarea id="css-input" class="editor-code-body"></textarea>
+            </div>
+            <div class="editor-preview" id="preview"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
+
+
